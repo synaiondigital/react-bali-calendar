@@ -91,32 +91,24 @@ export const DateCell: React.FC<DateCellProps> = ({
                 `}
                 style={cellStyle}
             >
-                {/* Date number with optional Bali holiday circle */}
                 <span
                     className={`
                         font-semibold text-sm inline-flex items-center justify-center
-                        ${isSunday ? 'text-red-500' : 'text-gray-700 dark:text-gray-300'}
+                        ${isSunday || hasNationalHoliday ? 'text-red-500' : 'text-gray-700 dark:text-gray-300'}
                         ${day.isToday ? 'text-orange-600 font-bold' : ''}
-                        ${isBaliHoliday ? 'w-7 h-7 rounded-full border-2 border-red-500' : ''}
+                        ${isBaliHoliday ? 'w-7 h-7 rounded-full border border-red-500' : ''}
                     `}
                 >
                     {day.dayNumber}
                 </span>
 
-                {/* National holiday indicator dot - bottom right */}
-                {hasNationalHoliday && day.isCurrentMonth && (
-                    <div
-                        className="absolute bottom-1 right-1 w-1.5 h-1.5 rounded-full bg-red-500"
-                        title={day.holidays.filter(h => h.type === 'national' || h.type === 'cuti-bersama').map(h => h.name).join(', ')}
-                    />
-                )}
 
-                {/* Moon phase indicator - top right */}
+                {/* Moon phase indicator - top center (12 o'clock) */}
                 {day.baliInfo?.saka.isPurnama && day.isCurrentMonth && (
-                    <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-yellow-400" title="Purnama" />
+                    <div className="absolute top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-red-500" title="Purnama" />
                 )}
                 {day.baliInfo?.saka.isTilem && day.isCurrentMonth && (
-                    <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-gray-800 dark:bg-white" title="Tilem" />
+                    <div className="absolute top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-gray-800 dark:bg-white" title="Tilem" />
                 )}
             </div>
         );
@@ -127,7 +119,7 @@ export const DateCell: React.FC<DateCellProps> = ({
         ? (day.isToday ? 'var(--bc-accent-bg)' : 'var(--bc-bg)')
         : 'var(--bc-bg-alt)';
 
-    const textColor = isSunday
+    const textColor = (isSunday || hasNationalHoliday)
         ? '#ef4444'
         : (day.isToday ? 'var(--bc-accent)' : 'var(--bc-text)');
 
@@ -152,28 +144,21 @@ export const DateCell: React.FC<DateCellProps> = ({
                         width: '28px',
                         height: '28px',
                         borderRadius: '50%',
-                        border: '2px solid #ef4444',
+                        border: '1px solid #ef4444',
                     } : {})
                 }}
             >
                 {day.dayNumber}
             </span>
 
-            {/* National holiday indicator dot - bottom right */}
-            {hasNationalHoliday && day.isCurrentMonth && (
-                <div
-                    className="absolute bottom-1 right-1 w-1.5 h-1.5 rounded-full bg-red-500"
-                    title={day.holidays.filter(h => h.type === 'national' || h.type === 'cuti-bersama').map(h => h.name).join(', ')}
-                />
-            )}
 
-            {/* Moon phase indicator - top right */}
+            {/* Moon phase indicator - top center (12 o'clock) */}
             {day.baliInfo?.saka.isPurnama && day.isCurrentMonth && (
-                <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-yellow-400" title="Purnama" />
+                <div className="absolute top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-red-500" title="Purnama" />
             )}
             {day.baliInfo?.saka.isTilem && day.isCurrentMonth && (
                 <div
-                    className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full"
+                    className="absolute top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
                     style={{ backgroundColor: isDark ? '#ffffff' : '#1f2937' }}
                     title="Tilem"
                 />

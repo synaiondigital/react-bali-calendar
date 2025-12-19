@@ -1,6 +1,6 @@
 {
     "name": "react-bali-calendar",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "React datepicker for Balinese Calendar with Indonesian National Holidays",
     "type": "module",
     "main": "./dist/index.js",
